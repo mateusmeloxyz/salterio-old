@@ -41,32 +41,36 @@ class SampleItemListView extends StatelessWidget {
       // In contrast to the default ListView constructor, which requires
       // building all Widgets up front, the ListView.builder constructor lazily
       // builds Widgets as they’re scrolled into view.
-      body: GridView.count(
-        padding: const EdgeInsets.all(10.0),
-        // Create a grid with 2 columns. If you change the scrollDirection to
-        // horizontal, this produces 2 rows.
-        crossAxisCount: 5,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        // Generate 100 widgets that display their index in the List.
-        children: List.generate(150, (index) {
-          return Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: Colors.teal,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                '${index + 1}',
-                style: Theme.of(context,).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          return GridView.count(
+            padding: const EdgeInsets.all(10.0),
+            // Create a grid with 2 columns. If you change the scrollDirection to
+            // horizontal, this produces 2 rows.
+            crossAxisCount: orientation == Orientation.portrait ? 5 : 10,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            // Generate 100 widgets that display their index in the List.
+            children: List.generate(150, (index) {
+              return Container(
+                padding: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Colors.teal,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-            ),
+                child: Center(
+                  child: Text(
+                    '${index + 1}',
+                    style: Theme.of(context,).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              );
+            },
+            growable: false),
           );
-        },
-        growable: false),
+        }
       ),
     );
   }
